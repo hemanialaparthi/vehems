@@ -9,12 +9,14 @@ import { Download, Calendar, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import ContactForm from '@/components/ContactForm';
 
 export default function SubjectPage() {
   const params = useParams();
   const subjectId = params.subject as string;
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showContactForm, setShowContactForm] = useState(false);
 
   const subject = subjects.find(s => s.id === subjectId);
 
@@ -170,15 +172,31 @@ export default function SubjectPage() {
                 We're working on adding comprehensive notes for {subject.name}. 
                 Check back soon for updates!
               </p>
-              <Link
-                href="/subjects"
-                className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors inline-block"
-              >
-                Explore Other Subjects
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Link
+                  href="/subjects"
+                  className="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors"
+                >
+                  Explore Other Subjects
+                </Link>
+                <button
+                  onClick={() => setShowContactForm(true)}
+                  className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+                >
+                  Request This Subject
+                </button>
+              </div>
             </div>
           </motion.div>
         )}
+
+        {/* Contact Form Modal */}
+        <ContactForm
+          isOpen={showContactForm}
+          onClose={() => setShowContactForm(false)}
+          subject={subject?.name}
+          type="subject-request"
+        />
       </div>
     </div>
   );

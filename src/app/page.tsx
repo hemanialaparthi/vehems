@@ -102,10 +102,10 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl font-bold text-white mb-4">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Explore Our Subjects
             </h2>
-            <p className="text-xl text-white max-w-2xl mx-auto">
+            <p className="text-xl text-gray-700 max-w-2xl mx-auto">
               Choose from our comprehensive collection of IGCSE subjects, 
               each carefully organized with high-quality notes and resources.
             </p>

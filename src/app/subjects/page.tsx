@@ -1,11 +1,14 @@
 'use client';
 
+import { useState } from 'react';
 import { subjects } from '@/config/subjects';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, BookOpen } from 'lucide-react';
+import ContactForm from '@/components/ContactForm';
 
 export default function SubjectsPage() {
+  const [showContactForm, setShowContactForm] = useState(false);
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-12">
@@ -75,13 +78,20 @@ export default function SubjectsPage() {
             We're constantly adding new subjects and topics. 
             Check back regularly for updates!
           </p>
-          <Link
-            href="/contact"
-            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors inline-block"
+          <button
+            onClick={() => setShowContactForm(true)}
+            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
           >
             Request a Subject
-          </Link>
+          </button>
         </motion.div>
+
+        {/* Contact Form Modal */}
+        <ContactForm
+          isOpen={showContactForm}
+          onClose={() => setShowContactForm(false)}
+          type="subject-request"
+        />
       </div>
     </div>
   );
