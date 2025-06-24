@@ -18,7 +18,7 @@ export default function SubjectsPage() {
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             All Subjects
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-700 max-w-2xl mx-auto">
             Explore our comprehensive collection of IGCSE subjects. 
             Each subject contains carefully curated notes and study materials.
           </p>
@@ -71,7 +71,7 @@ export default function SubjectsPage() {
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
             Can't find what you're looking for?
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-700 mb-6">
             We're constantly adding new subjects and topics. 
             Check back regularly for updates!
           </p>

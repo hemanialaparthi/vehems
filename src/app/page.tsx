@@ -102,10 +102,10 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl font-bold text-white mb-4">
               Explore Our Subjects
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-white max-w-2xl mx-auto">
               Choose from our comprehensive collection of IGCSE subjects, 
               each carefully organized with high-quality notes and resources.
             </p>
@@ -152,7 +152,7 @@ export default function HomePage() {
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Why Choose Vehems?
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-700">
               We provide everything you need to succeed in your IGCSE journey
             </p>
           </motion.div>
@@ -167,8 +167,8 @@ export default function HomePage() {
               <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <BookOpen className="w-8 h-8 text-indigo-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Comprehensive Notes</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Comprehensive Notes</h3>
+              <p className="text-gray-700">
                 Detailed, well-structured notes covering all IGCSE subjects with clear explanations and examples.
               </p>
             </motion.div>
@@ -182,8 +182,8 @@ export default function HomePage() {
               <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Download className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Easy Access</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Easy Access</h3>
+              <p className="text-gray-700">
                 Download notes instantly in PDF format. Study offline anytime, anywhere.
               </p>
             </motion.div>
@@ -197,8 +197,8 @@ export default function HomePage() {
               <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Star className="w-8 h-8 text-purple-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Quality Content</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Quality Content</h3>
+              <p className="text-gray-700">
                 All notes are carefully reviewed and updated to match the latest IGCSE curriculum standards.
               </p>
             </motion.div>
