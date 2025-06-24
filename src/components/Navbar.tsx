@@ -63,6 +63,9 @@ export default function Navbar() {
               <Link href="/subjects" className="text-gray-700 hover:text-indigo-600 transition-colors">
                 Subjects
               </Link>
+              <Link href="/about" className="text-gray-700 hover:text-indigo-600 transition-colors">
+                About
+              </Link>
               {user && (
                 <Link href="/profile" className="text-gray-700 hover:text-indigo-600 transition-colors">
                   Profile
@@ -114,6 +117,13 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Subjects
+              </Link>
+              <Link 
+                href="/about" 
+                className="block px-3 py-2 text-gray-700 hover:text-indigo-600"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                About
               </Link>
               {user && (
                 <Link 
