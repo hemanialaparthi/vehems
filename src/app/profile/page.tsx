@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { User, Calendar, Download, BookmarkIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 export default function ProfilePage() {
   const { user, loading } = useAuth();
@@ -128,12 +129,12 @@ export default function ProfilePage() {
               <p className="text-gray-600 mb-6">
                 Start downloading notes to see your activity here.
               </p>
-              <a
+              <Link
                 href="/subjects"
                 className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors inline-block"
               >
                 Explore Subjects
-              </a>
+              </Link>
             </div>
           </motion.div>
 

@@ -4,9 +4,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useState } from 'react';
-import { User, LogOut, Menu, X } from 'lucide-react';
+import { LogOut, Menu, X } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -15,7 +14,6 @@ export default function Navbar() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const router = useRouter();
 
   const handleGoogleSignIn = async () => {
     try {

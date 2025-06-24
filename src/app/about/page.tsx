@@ -1,9 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, Github, Heart, BookOpen, Code, GraduationCap } from 'lucide-react';
+import { Mail, Linkedin, Heart, BookOpen, Code, GraduationCap } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function AboutPage() {
   return (
