@@ -26,15 +26,15 @@ export async function POST(request: NextRequest) {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER, // Your Gmail address
-        pass: process.env.EMAIL_APP_PASSWORD, // Gmail app password (not regular password)
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_APP_PASSWORD,
       },
     });
 
     // Email content
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: 'vedapurnithaalaparthi@gmail.com', // Your sister's email
+      to: 'vedapurnithaalaparthi@gmail.com',
       subject: `Vehems Contact: ${subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
           </p>
         </div>
       `,
-      replyTo: email, // So your sister can reply directly to the sender
+      replyTo: email,
     };
 
     // Send email
