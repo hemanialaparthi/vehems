@@ -60,12 +60,33 @@ export default function NotePage() {
       // Update local state
       setNote(prev => prev ? { ...prev, downloads: (prev.downloads || 0) + 1 } : null);
       
-      // Open the PDF in a new tab
-      window.open(note.downloadURL, '_blank');
+      // Handle download based on storage type
+      if (note.fileContent) {
+        // Base64 stored file - create blob and download
+        const byteCharacters = atob(note.fileContent.split(',')[1]);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: note.fileType || 'application/pdf' });
+        
+        // Create download link
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = note.fileName || `${note.topic}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      } else if (note.downloadURL) {
+        // Legacy Firebase Storage file - open in new tab
+        window.open(note.downloadURL, '_blank');
+      }
     } catch (error) {
-      console.error('Error updating download count:', error);
-      // Still allow download even if counter update fails
-      window.open(note.downloadURL, '_blank');
+      console.error('Error downloading file:', error);
+      alert('Error downloading file. Please try again.');
     }
   };
 

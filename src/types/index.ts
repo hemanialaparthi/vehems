@@ -2,7 +2,11 @@ export interface Note {
   id: string;
   subject: Subject;
   topic: string;
-  downloadURL: string;
+  downloadURL?: string; // Optional for backward compatibility
+  fileName?: string; // For base64 storage
+  fileType?: string; // For base64 storage
+  fileSize?: number; // For base64 storage
+  fileContent?: string; // Base64 encoded file content
   createdAt: Date;
   updatedAt: Date;
   downloads?: number;

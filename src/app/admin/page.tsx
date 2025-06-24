@@ -17,8 +17,7 @@ import {
   orderBy,
   query 
 } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import { db, storage } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 
 export default function AdminPage() {
   const { user, loading } = useAuth();
@@ -48,7 +47,9 @@ export default function AdminPage() {
     // Check if the user is an admin (you can add your sister's email here)
     const adminEmails = [
       process.env.NEXT_PUBLIC_ADMIN_EMAIL,
-      'admin@vehems.com', // Add your sister's email here
+      'vedapurnithaalaparthi@gmail.com', // Primary admin email
+      'vedapurnithalaparthi@gmail.com', // Alternative spelling (backup)
+      'admin@vehems.com',
       // Add more admin emails as needed
     ];
     return email && adminEmails.includes(email);
@@ -86,27 +87,37 @@ export default function AdminPage() {
       return;
     }
 
+    // Check file size (Firestore has a 1MB document limit)
+    if (file.size > 1024 * 1024) { // 1MB limit
+      alert('File size must be less than 1MB due to Firestore limitations. Please use a smaller PDF file.');
+      return;
+    }
+
+    console.log('Starting upload process...');
     setUploading(true);
 
     try {
-      // Upload file to Firebase Storage
-      const fileName = `${selectedSubject}/${Date.now()}_${file.name}`;
-      const storageRef = ref(storage, `notes/${fileName}`);
-      
-      const snapshot = await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(snapshot.ref);
+      // Convert file to base64
+      console.log('Converting file to base64...');
+      const base64String = await convertFileToBase64(file);
+      console.log('File converted to base64 successfully');
 
-      // Save note data to Firestore
+      // Save note data to Firestore with base64 content
       const noteData = {
         subject: selectedSubject,
         topic: topic.trim(),
-        downloadURL,
+        fileName: file.name,
+        fileType: file.type,
+        fileSize: file.size,
+        fileContent: base64String, // Store file as base64
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
         downloads: 0,
       };
 
+      console.log('Saving to Firestore...');
       await addDoc(collection(db, 'notes'), noteData);
+      console.log('Successfully saved to Firestore');
 
       // Reset form
       setSelectedSubject('');
@@ -119,10 +130,48 @@ export default function AdminPage() {
       alert('Note uploaded successfully!');
     } catch (error) {
       console.error('Error uploading note:', error);
-      alert('Error uploading note. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      alert(`Error uploading note: ${errorMessage}`);
     } finally {
       setUploading(false);
     }
+  };
+
+  // Helper function to handle file preview
+  const handlePreview = (note: Note) => {
+    if (note.fileContent) {
+      // Base64 stored file - create blob URL and open
+      const byteCharacters = atob(note.fileContent.split(',')[1]);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: note.fileType || 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+      // Clean up the URL after a delay
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } else if (note.downloadURL) {
+      // Legacy Firebase Storage file
+      window.open(note.downloadURL, '_blank');
+    }
+  };
+
+  // Helper function to convert file to base64
+  const convertFileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.result) {
+          resolve(reader.result as string);
+        } else {
+          reject(new Error('Failed to read file'));
+        }
+      };
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    });
   };
 
   const handleDelete = async (note: Note) => {
@@ -131,16 +180,8 @@ export default function AdminPage() {
     }
 
     try {
-      // Delete from Firestore
+      // Delete from Firestore (files are stored as base64 in the document)
       await deleteDoc(doc(db, 'notes', note.id));
-      
-      // Delete from Storage
-      try {
-        const fileRef = ref(storage, note.downloadURL);
-        await deleteObject(fileRef);
-      } catch (storageError) {
-        console.error('Error deleting file from storage:', storageError);
-      }
       
       // Refresh notes list
       fetchNotes();
@@ -247,7 +288,7 @@ export default function AdminPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  PDF File
+                  PDF File (Max 1MB)
                 </label>
                 <input
                   type="file"
@@ -257,10 +298,20 @@ export default function AdminPage() {
                   required
                 />
                 {file && (
-                  <p className="text-sm text-gray-600 mt-1">
-                    Selected: {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
-                  </p>
+                  <div className="mt-1">
+                    <p className="text-sm text-gray-600">
+                      Selected: {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
+                    </p>
+                    {file.size > 1024 * 1024 && (
+                      <p className="text-sm text-red-600">
+                        ⚠️ File is too large! Maximum size is 1MB due to Firestore limitations.
+                      </p>
+                    )}
+                  </div>
                 )}
+                <p className="text-xs text-gray-500 mt-1">
+                  Note: Using Firebase free plan (Spark) - files are stored as Base64 in Firestore with 1MB limit per document.
+                </p>
               </div>
 
               <button
@@ -328,7 +379,7 @@ export default function AdminPage() {
                           <td className="py-3 px-4">
                             <div className="flex items-center space-x-2">
                               <button
-                                onClick={() => window.open(note.downloadURL, '_blank')}
+                                onClick={() => handlePreview(note)}
                                 className="text-blue-600 hover:text-blue-800 p-1"
                                 title="Preview"
                               >
