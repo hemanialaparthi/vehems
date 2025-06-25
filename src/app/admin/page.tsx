@@ -397,23 +397,23 @@ export default function AdminPage() {
                       const level = levels.find(l => l.id === note.level);
                       return (
                         <tr key={note.id} className="border-b border-gray-100 hover:bg-gray-50">
-                          <td className="py-3 px-4">
+                          <td className="py-3 px-4 text-gray-900">
                             <div className="flex items-center">
                               <span className="mr-2">{level?.icon || '🎓'}</span>
-                              <span className="font-medium">{level?.displayName || 'GCSE'}</span>
+                              <span className="font-medium text-gray-900">{level?.displayName || 'GCSE'}</span>
                             </div>
                           </td>
-                          <td className="py-3 px-4">
+                          <td className="py-3 px-4 text-gray-900">
                             <div className="flex items-center">
                               <span className="mr-2">{subject?.icon}</span>
-                              {subject?.name}
+                              <span className="text-gray-900">{subject?.name}</span>
                             </div>
                           </td>
-                          <td className="py-3 px-4 font-medium">{note.topic}</td>
-                          <td className="py-3 px-4 text-gray-600">
+                          <td className="py-3 px-4 font-medium text-gray-900">{note.topic}</td>
+                          <td className="py-3 px-4 text-gray-700">
                             {note.createdAt.toLocaleDateString()}
                           </td>
-                          <td className="py-3 px-4 text-gray-600">
+                          <td className="py-3 px-4 text-gray-700">
                             {note.downloads || 0}
                           </td>
                           <td className="py-3 px-4">
