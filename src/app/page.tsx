@@ -9,7 +9,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600 text-white">
+      <section className="bg-gradient-to-br from-[#5a7a1e] via-[#a0b834] to-[#c5d86c] text-white">
         <div className="max-w-7xl mx-auto px-4 py-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -27,13 +27,13 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/subjects"
-                className="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                className="bg-white text-[#7d9929] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
               >
                 Explore Subjects
               </Link>
               <Link
                 href="#features"
-                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-indigo-600 transition-colors"
+                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#5a7a1e] transition-colors"
               >
                 Learn More
               </Link>
@@ -52,7 +52,7 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="bg-white p-6 rounded-lg shadow-md"
             >
-              <BookOpen className="w-8 h-8 text-indigo-600 mx-auto mb-2" />
+              <BookOpen className="w-8 h-8 text-[#7d9929] mx-auto mb-2" />
               <div className="text-3xl font-bold text-gray-900">10+</div>
               <div className="text-gray-600">Subjects</div>
             </motion.div>
@@ -122,7 +122,7 @@ export default function HomePage() {
                 className="group"
               >
                 <Link href={`/subjects/${subject.id}`}>
-                  <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border-2 border-transparent hover:border-indigo-200">
+                  <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border-2 border-transparent hover:border-[#c5d86c]">
                     <div className={`w-16 h-16 ${subject.color} rounded-full flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform`}>
                       {subject.icon}
                     </div>
@@ -164,8 +164,8 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-center"
             >
-              <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <BookOpen className="w-8 h-8 text-indigo-600" />
+              <div className="bg-[#e9f2b3] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <BookOpen className="w-8 h-8 text-[#7d9929]" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Comprehensive Notes</h3>
               <p className="text-gray-700">
@@ -180,7 +180,7 @@ export default function HomePage() {
               className="text-center"
             >
               <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Download className="w-8 h-8 text-green-600" />
+                <Download className="w-8 h-8 text-[#6d8524]" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Easy Access</h3>
               <p className="text-gray-700">
@@ -194,8 +194,8 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="text-center"
             >
-              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Star className="w-8 h-8 text-purple-600" />
+              <div className="bg-[#c5d86c] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Star className="w-8 h-8 text-[#a0b834]" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Quality Content</h3>
               <p className="text-gray-700">
@@ -207,7 +207,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-indigo-600 text-white">
+      <section className="py-16 bg-[#7d9929] text-white">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -217,19 +217,19 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Ready to Excel in Your IGCSE Journey?
             </h2>
-            <p className="text-xl mb-8 text-indigo-100">
+            <p className="text-xl mb-8 text-[#e9f2b3]">
               Join thousands of students who trust Vehems for their study materials.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/subjects"
-                className="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-block"
+                className="bg-white text-[#7d9929] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-block"
               >
                 Start Learning Today
               </Link>
               <Link
                 href="/about"
-                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-indigo-600 transition-colors inline-block"
+                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#5a7a1e] transition-colors inline-block"
               >
                 Meet the Creator
               </Link>

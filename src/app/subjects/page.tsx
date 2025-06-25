@@ -38,12 +38,12 @@ export default function SubjectsPage() {
               className="group"
             >
               <Link href={`/subjects/${subject.id}`}>
-                <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 border border-gray-100 group-hover:border-indigo-200">
+                <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 border border-gray-100 group-hover:border-[#c5d86c]">
                   <div className="flex items-center justify-between mb-4">
                     <div className={`w-16 h-16 ${subject.color} rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform`}>
                       {subject.icon}
                     </div>
-                    <ArrowRight className="w-6 h-6 text-gray-400 group-hover:text-indigo-600 transition-colors" />
+                    <ArrowRight className="w-6 h-6 text-gray-400 group-hover:text-[#a0b834] transition-colors" />
                   </div>
                   
                   <h3 className="text-2xl font-bold text-gray-900 mb-3">
@@ -80,7 +80,7 @@ export default function SubjectsPage() {
           </p>
           <button
             onClick={() => setShowContactForm(true)}
-            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+            className="bg-[#a0b834] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#7d9929] transition-colors"
           >
             Request a Subject
           </button>

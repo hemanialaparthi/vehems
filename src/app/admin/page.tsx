@@ -197,7 +197,7 @@ export default function AdminPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#a0b834] mx-auto mb-4"></div>
           <p className="text-gray-600">Loading admin panel...</p>
         </div>
       </div>
@@ -212,7 +212,7 @@ export default function AdminPage() {
           <p className="text-gray-600 mb-6">You don't have permission to access this page.</p>
           <button
             onClick={() => router.push('/')}
-            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+            className="bg-[#a0b834] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#7d9929] transition-colors"
           >
             Go Home
           </button>
@@ -259,7 +259,7 @@ export default function AdminPage() {
                   <select
                     value={selectedSubject}
                     onChange={(e) => setSelectedSubject(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834]"
                     required
                   >
                     <option value="">Select a subject</option>
@@ -280,7 +280,7 @@ export default function AdminPage() {
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
                     placeholder="e.g., Photosynthesis, Atomic Structure"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834]"
                     required
                   />
                 </div>
@@ -294,7 +294,7 @@ export default function AdminPage() {
                   type="file"
                   accept=".pdf"
                   onChange={(e) => setFile(e.target.files?.[0] || null)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834]"
                   required
                 />
                 {file && (
@@ -317,7 +317,7 @@ export default function AdminPage() {
               <button
                 type="submit"
                 disabled={uploading}
-                className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                className="w-full bg-[#a0b834] text-white py-3 rounded-lg font-semibold hover:bg-[#7d9929] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               >
                 {uploading ? (
                   <>
@@ -343,7 +343,7 @@ export default function AdminPage() {
 
             {loadingNotes ? (
               <div className="text-center py-8">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#a0b834] mx-auto mb-4"></div>
                 <p className="text-gray-600">Loading notes...</p>
               </div>
             ) : notes.length > 0 ? (

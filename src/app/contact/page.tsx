@@ -40,8 +40,8 @@ export default function ContactPage() {
             
             <div className="space-y-4">
               <div className="flex items-center">
-                <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
-                  <Mail className="w-5 h-5 text-indigo-600" />
+                <div className="w-10 h-10 bg-[#e9f2b3] rounded-full flex items-center justify-center mr-4">
+                  <Mail className="w-5 h-5 text-[#7d9929]" />
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Email</p>
@@ -60,8 +60,8 @@ export default function ContactPage() {
               </div>
               
               <div className="flex items-start">
-                <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-4">
-                  <MapPin className="w-5 h-5 text-purple-600" />
+                <div className="w-10 h-10 bg-[#c5d86c] rounded-full flex items-center justify-center mr-4">
+                  <MapPin className="w-5 h-5 text-[#a0b834]" />
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Service Area</p>
@@ -70,9 +70,9 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <h3 className="font-semibold text-blue-900 mb-2">📚 Study Support</h3>
-              <p className="text-blue-800 text-sm">
+            <div className="mt-8 p-4 bg-[#e9f2b3] border border-[#c5d86c] rounded-lg">
+              <h3 className="font-semibold text-[#5a7a1e] mb-2">📚 Study Support</h3>
+              <p className="text-[#7d9929] text-sm">
                 Need help with specific topics? Request subject notes or ask questions 
                 about our materials. We're committed to your academic success!
               </p>
@@ -93,13 +93,13 @@ export default function ContactPage() {
             <div className="space-y-4">
               <button
                 onClick={() => setShowContactForm(true)}
-                className="w-full bg-indigo-600 text-white p-4 rounded-lg hover:bg-indigo-700 transition-colors text-left"
+                className="w-full bg-[#7d9929] text-white p-4 rounded-lg hover:bg-[#5a7a1e] transition-colors text-left"
               >
                 <div className="flex items-center">
                   <MessageCircle className="w-6 h-6 mr-3" />
                   <div>
                     <p className="font-semibold">Send us a Message</p>
-                    <p className="text-indigo-100 text-sm">General inquiries and feedback</p>
+                    <p className="text-[#e9f2b3] text-sm">General inquiries and feedback</p>
                   </div>
                 </div>
               </button>

@@ -96,7 +96,7 @@ export default function NotePage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#a0b834] mx-auto mb-4"></div>
           <p className="text-gray-600">Loading note...</p>
         </div>
       </div>
@@ -110,7 +110,7 @@ export default function NotePage() {
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Note Not Found</h1>
           <Link
             href="/subjects"
-            className="text-indigo-600 hover:text-indigo-800"
+            className="text-[#a0b834] hover:text-[#7d9929]"
           >
             ← Back to Subjects
           </Link>
@@ -129,13 +129,13 @@ export default function NotePage() {
         >
           {/* Breadcrumb */}
           <div className="flex items-center text-sm text-gray-600 mb-6">
-            <Link href="/subjects" className="hover:text-indigo-600">
+            <Link href="/subjects" className="hover:text-[#a0b834]">
               Subjects
             </Link>
             <span className="mx-2">›</span>
             <Link 
               href={`/subjects/${subject.id}`} 
-              className="hover:text-indigo-600"
+              className="hover:text-[#a0b834]"
             >
               {subject.name}
             </Link>
@@ -146,7 +146,7 @@ export default function NotePage() {
           {/* Back Button */}
           <Link
             href={`/subjects/${subject.id}`}
-            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 mb-8"
+            className="inline-flex items-center text-[#a0b834] hover:text-[#7d9929] mb-8"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to {subject.name}
@@ -187,7 +187,7 @@ export default function NotePage() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={handleDownload}
-                  className="flex-1 bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center"
+                  className="flex-1 bg-[#a0b834] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#7d9929] transition-colors flex items-center justify-center"
                 >
                   <Download className="w-5 h-5 mr-2" />
                   Download PDF
@@ -207,11 +207,11 @@ export default function NotePage() {
           </div>
 
           {/* Additional Info */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-            <h2 className="text-lg font-semibold text-blue-900 mb-2">
+          <div className="bg-[#e9f2b3] border border-[#c5d86c] rounded-lg p-6">
+            <h2 className="text-lg font-semibold text-[#5a7a1e] mb-2">
               📚 Study Tips
             </h2>
-            <ul className="text-blue-800 space-y-1">
+            <ul className="text-[#7d9929] space-y-1">
               <li>• Review the notes multiple times for better retention</li>
               <li>• Create your own summary after reading</li>
               <li>• Practice with past papers to test your understanding</li>

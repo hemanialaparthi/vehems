@@ -62,7 +62,7 @@ export default function SubjectPage() {
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Subject Not Found</h1>
           <Link
             href="/subjects"
-            className="text-indigo-600 hover:text-indigo-800"
+            className="text-[#a0b834] hover:text-[#7d9929]"
           >
             ← Back to Subjects
           </Link>
@@ -83,7 +83,7 @@ export default function SubjectPage() {
         >
           <Link
             href="/subjects"
-            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 mb-4"
+            className="inline-flex items-center text-[#a0b834] hover:text-[#7d9929] mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Subjects
@@ -145,7 +145,7 @@ export default function SubjectPage() {
                   
                   <Link
                     href={`/notes/${note.id}`}
-                    className="inline-flex items-center bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium"
+                    className="inline-flex items-center bg-[#a0b834] text-white px-4 py-2 rounded-lg hover:bg-[#7d9929] transition-colors text-sm font-medium"
                   >
                     <Download className="w-4 h-4 mr-1" />
                     View
@@ -181,7 +181,7 @@ export default function SubjectPage() {
                 </Link>
                 <button
                   onClick={() => setShowContactForm(true)}
-                  className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+                  className="bg-[#a0b834] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#7d9929] transition-colors"
                 >
                   Request This Subject
                 </button>

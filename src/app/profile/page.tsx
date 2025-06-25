@@ -21,7 +21,7 @@ export default function ProfilePage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#a0b834] mx-auto mb-4"></div>
           <p className="text-gray-600">Loading profile...</p>
         </div>
       </div>
@@ -43,7 +43,7 @@ export default function ProfilePage() {
           {/* Profile Header */}
           <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
             <div className="flex items-center mb-6">
-              <div className="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mr-6">
+              <div className="w-20 h-20 bg-[#e9f2b3] rounded-full flex items-center justify-center mr-6">
                 {user.photoURL ? (
                   <img
                     src={user.photoURL}
@@ -51,7 +51,7 @@ export default function ProfilePage() {
                     className="w-20 h-20 rounded-full object-cover"
                   />
                 ) : (
-                  <User className="w-10 h-10 text-indigo-600" />
+                  <User className="w-10 h-10 text-[#7d9929]" />
                 )}
               </div>
               <div>
@@ -69,7 +69,7 @@ export default function ProfilePage() {
             </div>
 
             {/* Member Badge */}
-            <div className="inline-flex items-center bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium">
+            <div className="inline-flex items-center bg-gradient-to-r from-[#7d9929] to-[#a0b834] text-white px-4 py-2 rounded-full text-sm font-medium">
               ✨ Vehems Member
             </div>
           </div>
@@ -104,7 +104,7 @@ export default function ProfilePage() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="bg-white rounded-lg shadow-md p-6 text-center"
             >
-              <User className="w-8 h-8 text-purple-600 mx-auto mb-2" />
+              <User className="w-8 h-8 text-[#a0b834] mx-auto mb-2" />
               <div className="text-2xl font-bold text-gray-900">Active</div>
               <div className="text-gray-600">Status</div>
             </motion.div>
@@ -131,7 +131,7 @@ export default function ProfilePage() {
               </p>
               <Link
                 href="/subjects"
-                className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors inline-block"
+                className="bg-[#a0b834] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#7d9929] transition-colors inline-block"
               >
                 Explore Subjects
               </Link>
@@ -143,12 +143,12 @@ export default function ProfilePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-8 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-lg p-6"
+            className="mt-8 bg-gradient-to-r from-[#e9f2b3] to-[#c5d86c] border border-[#a0b834] rounded-lg p-6"
           >
-            <h3 className="text-lg font-semibold text-indigo-900 mb-2">
+            <h3 className="text-lg font-semibold text-[#5a7a1e] mb-2">
               🚀 Coming Soon
             </h3>
-            <ul className="text-indigo-800 space-y-1">
+            <ul className="text-[#7d9929] space-y-1">
               <li>• Download history and analytics</li>
               <li>• Bookmark your favorite notes</li>
               <li>• Request specific topics</li>

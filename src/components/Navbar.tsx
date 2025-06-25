@@ -48,7 +48,7 @@ export default function Navbar() {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2">
-              <div className="text-2xl font-bold text-indigo-600">
+              <div className="text-2xl font-bold text-[#a0b834]">
                 Vehems
               </div>
               <div className="text-sm text-gray-500 hidden sm:block">
@@ -58,14 +58,14 @@ export default function Navbar() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-6">
-              <Link href="/subjects" className="text-gray-700 hover:text-indigo-600 transition-colors">
+              <Link href="/subjects" className="text-gray-700 hover:text-[#a0b834] transition-colors">
                 Subjects
               </Link>
-              <Link href="/about" className="text-gray-700 hover:text-indigo-600 transition-colors">
+              <Link href="/about" className="text-gray-700 hover:text-[#a0b834] transition-colors">
                 About
               </Link>
               {user && (
-                <Link href="/profile" className="text-gray-700 hover:text-indigo-600 transition-colors">
+                <Link href="/profile" className="text-gray-700 hover:text-[#a0b834] transition-colors">
                   Profile
                 </Link>
               )}
@@ -86,7 +86,7 @@ export default function Navbar() {
               ) : (
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+                  className="bg-[#a0b834] text-white px-4 py-2 rounded-lg hover:bg-[#7d9929] transition-colors"
                 >
                   Sign In
                 </button>
@@ -97,7 +97,7 @@ export default function Navbar() {
             <div className="md:hidden">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-gray-700 hover:text-indigo-600"
+                className="text-gray-700 hover:text-[#a0b834]"
               >
                 {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -111,14 +111,14 @@ export default function Navbar() {
             <div className="px-2 pt-2 pb-3 space-y-1">
               <Link 
                 href="/subjects" 
-                className="block px-3 py-2 text-gray-700 hover:text-indigo-600"
+                className="block px-3 py-2 text-gray-700 hover:text-[#a0b834]"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Subjects
               </Link>
               <Link 
                 href="/about" 
-                className="block px-3 py-2 text-gray-700 hover:text-indigo-600"
+                className="block px-3 py-2 text-gray-700 hover:text-[#a0b834]"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 About
@@ -126,7 +126,7 @@ export default function Navbar() {
               {user && (
                 <Link 
                   href="/profile" 
-                  className="block px-3 py-2 text-gray-700 hover:text-indigo-600"
+                  className="block px-3 py-2 text-gray-700 hover:text-[#a0b834]"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Profile
@@ -149,7 +149,7 @@ export default function Navbar() {
                     setShowAuthModal(true);
                     setMobileMenuOpen(false);
                   }}
-                  className="block w-full text-left px-3 py-2 bg-indigo-600 text-white rounded-lg"
+                  className="block w-full text-left px-3 py-2 bg-[#a0b834] text-white rounded-lg"
                 >
                   Sign In
                 </button>
@@ -184,7 +184,7 @@ export default function Navbar() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834] text-black"
                   required
                 />
               </div>
@@ -197,14 +197,14 @@ export default function Navbar() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834] text-black"
                   required
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors font-medium"
+                className="w-full bg-[#a0b834] text-white py-2 rounded-lg hover:bg-[#7d9929] transition-colors font-medium"
               >
                 {isLogin ? 'Sign In' : 'Sign Up'}
               </button>
@@ -231,7 +231,7 @@ export default function Navbar() {
             <div className="mt-4 text-center">
               <button
                 onClick={() => setIsLogin(!isLogin)}
-                className="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+                className="text-[#a0b834] hover:text-[#7d9929] text-sm font-medium"
               >
                 {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
               </button>
