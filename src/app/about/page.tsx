@@ -191,7 +191,7 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">The Platform</h3>
                 <p className="text-gray-700">
-                  Using my programming skills, I built Vehems as a comprehensive platform where students 
+                  Using the help of my friends and my skills, I built Vehems as a comprehensive platform where students 
                   can access high-quality IGCSE notes, organized and easily accessible.
                 </p>
               </div>

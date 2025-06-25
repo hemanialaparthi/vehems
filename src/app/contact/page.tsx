@@ -50,8 +50,8 @@ export default function ContactPage() {
               </div>
               
               <div className="flex items-start">
-                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                  <MessageCircle className="w-5 h-5 text-green-600" />
+                <div className="w-10 h-10 bg-[#e9f2b3] rounded-full flex items-center justify-center mr-4">
+                  <MessageCircle className="w-5 h-5 text-[#7d9929]" />
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Response Time</p>
@@ -60,8 +60,8 @@ export default function ContactPage() {
               </div>
               
               <div className="flex items-start">
-                <div className="w-10 h-10 bg-[#c5d86c] rounded-full flex items-center justify-center mr-4">
-                  <MapPin className="w-5 h-5 text-[#a0b834]" />
+                <div className="w-10 h-10 bg-[#e9f2b3] rounded-full flex items-center justify-center mr-4">
+                  <MapPin className="w-5 h-5 text-[#7d9929]" />
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Service Area</p>
@@ -106,23 +106,23 @@ export default function ContactPage() {
               
               <button
                 onClick={() => setShowContactForm(true)}
-                className="w-full bg-green-600 text-white p-4 rounded-lg hover:bg-green-700 transition-colors text-left"
+                className="w-full bg-[#a0b834] text-white p-4 rounded-lg hover:bg-[#7d9929] transition-colors text-left"
               >
                 <div className="flex items-center">
                   <Mail className="w-6 h-6 mr-3" />
                   <div>
                     <p className="font-semibold">Request Subject Notes</p>
-                    <p className="text-green-100 text-sm">Request notes for specific subjects</p>
+                    <p className="text-[#e9f2b3] text-sm">Request notes for specific subjects</p>
                   </div>
                 </div>
               </button>
               
-              <div className="bg-gray-100 p-4 rounded-lg">
+              <div className="bg-[#e9f2b3] p-4 rounded-lg border border-[#c5d86c]">
                 <div className="flex items-center">
-                  <Phone className="w-6 h-6 mr-3 text-gray-600" />
+                  <Phone className="w-6 h-6 mr-3 text-[#7d9929]" />
                   <div>
                     <p className="font-semibold text-gray-900">Study Questions</p>
-                    <p className="text-gray-600 text-sm">Ask about specific topics or materials</p>
+                    <p className="text-[#7d9929] text-sm">Ask about specific topics or materials</p>
                   </div>
                 </div>
               </div>
