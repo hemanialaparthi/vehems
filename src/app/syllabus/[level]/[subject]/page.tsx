@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { subjects } from '@/config/subjects';
+import { levels } from '@/config/levels';
 import { Note } from '@/types';
 import { motion } from 'framer-motion';
 import { Download, Calendar, ArrowLeft } from 'lucide-react';
@@ -11,27 +12,32 @@ import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import ContactForm from '@/components/ContactForm';
 
-export default function SubjectPage() {
+export default function LevelSubjectPage() {
   const params = useParams();
+  const levelId = params.level as string;
   const subjectId = params.subject as string;
+  
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
   const [showContactForm, setShowContactForm] = useState(false);
 
+  const level = levels.find(l => l.id === levelId);
   const subject = subjects.find(s => s.id === subjectId);
 
   useEffect(() => {
-    if (subjectId) {
+    if (levelId && subjectId) {
       fetchNotes();
     }
-  }, [subjectId]);
+  }, [levelId, subjectId]);
 
   const fetchNotes = async () => {
     try {
       const notesRef = collection(db, 'notes');
+      // optimized query with orderBy (uses the composite index)
       const q = query(
         notesRef,
         where('subject', '==', subjectId),
+        where('level', '==', levelId),
         orderBy('createdAt', 'desc')
       );
       
@@ -39,14 +45,24 @@ export default function SubjectPage() {
       const fetchedNotes: Note[] = [];
       
       querySnapshot.forEach((doc) => {
+        const noteData = doc.data();
         fetchedNotes.push({
           id: doc.id,
-          ...doc.data(),
-          createdAt: doc.data().createdAt?.toDate() || new Date(),
-          updatedAt: doc.data().updatedAt?.toDate() || new Date(),
+          subject: noteData.subject,
+          topic: noteData.topic,
+          level: noteData.level || levelId,
+          fileName: noteData.fileName,
+          fileType: noteData.fileType,
+          fileSize: noteData.fileSize,
+          fileContent: noteData.fileContent,
+          downloadURL: noteData.downloadURL,
+          downloads: noteData.downloads || 0,
+          createdAt: noteData.createdAt?.toDate() || new Date(),
+          updatedAt: noteData.updatedAt?.toDate() || new Date(),
         } as Note);
       });
       
+      // No JavaScript sorting needed - Firestore handles it with the index
       setNotes(fetchedNotes);
     } catch (error) {
       console.error('Error fetching notes:', error);
@@ -55,16 +71,16 @@ export default function SubjectPage() {
     }
   };
 
-  if (!subject) {
+  if (!level || !subject) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Subject Not Found</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Page Not Found</h1>
           <Link
-            href="/subjects"
+            href="/syllabus"
             className="text-[#a0b834] hover:text-[#7d9929]"
           >
-            ← Back to Subjects
+            ← Back to Syllabus
           </Link>
         </div>
       </div>
@@ -81,19 +97,34 @@ export default function SubjectPage() {
           transition={{ duration: 0.8 }}
           className="mb-8"
         >
-          <Link
-            href="/subjects"
-            className="inline-flex items-center text-[#a0b834] hover:text-[#7d9929] mb-4"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Subjects
-          </Link>
+          <div className="flex items-center mb-4">
+            <Link
+              href="/syllabus"
+              className="text-[#a0b834] hover:text-[#7d9929] mr-2"
+            >
+              Syllabus
+            </Link>
+            <span className="text-gray-400 mx-2">→</span>
+            <Link
+              href={`/syllabus/${levelId}`}
+              className="text-[#a0b834] hover:text-[#7d9929] mr-2"
+            >
+              {level.displayName}
+            </Link>
+            <span className="text-gray-400 mx-2">→</span>
+            <span className="text-gray-600">{subject.name}</span>
+          </div>
           
           <div className="flex items-center mb-4">
             <div className={`w-20 h-20 ${subject.color} rounded-full flex items-center justify-center text-3xl mr-6`}>
               {subject.icon}
             </div>
             <div>
+              <div className="flex items-center mb-2">
+                <span className={`px-3 py-1 rounded-full text-sm font-medium ${level.color} text-white mr-3`}>
+                  {level.icon} {level.displayName}
+                </span>
+              </div>
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
                 {subject.name}
               </h1>
@@ -169,12 +200,12 @@ export default function SubjectPage() {
                 No Notes Available Yet
               </h2>
               <p className="text-gray-600 mb-6">
-                We're working on adding comprehensive notes for {subject.name}. 
+                We're working on adding comprehensive {level.displayName} notes for {subject.name}. 
                 Check back soon for updates!
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
-                  href="/subjects"
+                  href={`/syllabus/${levelId}`}
                   className="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors"
                 >
                   Explore Other Subjects
@@ -183,7 +214,7 @@ export default function SubjectPage() {
                   onClick={() => setShowContactForm(true)}
                   className="bg-[#a0b834] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#7d9929] transition-colors"
                 >
-                  Request This Subject
+                  Request This Content
                 </button>
               </div>
             </div>
@@ -194,7 +225,7 @@ export default function SubjectPage() {
         <ContactForm
           isOpen={showContactForm}
           onClose={() => setShowContactForm(false)}
-          subject={subject?.name}
+          subject={`${level.displayName} ${subject?.name}`}
           type="subject-request"
         />
       </div>

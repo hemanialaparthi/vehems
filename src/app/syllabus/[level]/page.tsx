@@ -1,14 +1,37 @@
 'use client';
 
 import { useState } from 'react';
+import { useParams } from 'next/navigation';
 import { subjects } from '@/config/subjects';
+import { levels } from '@/config/levels';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen } from 'lucide-react';
+import { ArrowRight, BookOpen, ArrowLeft } from 'lucide-react';
 import ContactForm from '@/components/ContactForm';
 
-export default function SubjectsPage() {
+export default function LevelSubjectsPage() {
+  const params = useParams();
+  const levelId = params.level as string;
   const [showContactForm, setShowContactForm] = useState(false);
+
+  const level = levels.find(l => l.id === levelId);
+
+  if (!level) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Level Not Found</h1>
+          <Link
+            href="/syllabus"
+            className="text-[#a0b834] hover:text-[#7d9929]"
+          >
+            ← Back to Syllabus
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-12">
@@ -16,15 +39,29 @@ export default function SubjectsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+          className="mb-8"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            All Subjects
-          </h1>
-          <p className="text-xl text-gray-700 max-w-2xl mx-auto">
-            Explore our comprehensive collection of IGCSE subjects. 
-            Each subject contains carefully curated notes and study materials.
-          </p>
+          <Link
+            href="/syllabus"
+            className="inline-flex items-center text-[#a0b834] hover:text-[#7d9929] mb-4"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Syllabus
+          </Link>
+          
+          <div className="flex items-center mb-6">
+            <div className={`w-20 h-20 ${level.color} rounded-full flex items-center justify-center text-3xl mr-6`}>
+              {level.icon}
+            </div>
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
+                {level.displayName} Subjects
+              </h1>
+              <p className="text-xl text-gray-600 mt-2">
+                {level.description}
+              </p>
+            </div>
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -37,7 +74,7 @@ export default function SubjectsPage() {
               whileHover={{ y: -5 }}
               className="group"
             >
-              <Link href={`/subjects/${subject.id}`}>
+              <Link href={`/syllabus/${levelId}/${subject.id}`}>
                 <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 border border-gray-100 group-hover:border-[#c5d86c]">
                   <div className="flex items-center justify-between mb-4">
                     <div className={`w-16 h-16 ${subject.color} rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform`}>
@@ -56,7 +93,7 @@ export default function SubjectsPage() {
                   
                   <div className="flex items-center text-sm text-gray-500">
                     <BookOpen className="w-4 h-4 mr-1" />
-                    <span>Multiple topics available</span>
+                    <span>Notes and resources available</span>
                   </div>
                 </div>
               </Link>
@@ -75,7 +112,7 @@ export default function SubjectsPage() {
             Can't find what you're looking for?
           </h2>
           <p className="text-gray-700 mb-6">
-            We're constantly adding new subjects and topics. 
+            We're constantly adding new subjects and topics for {level.displayName}. 
             Check back regularly for updates!
           </p>
           <button

@@ -52,14 +52,14 @@ export default function Navbar() {
                 Vehems
               </div>
               <div className="text-sm text-gray-500 hidden sm:block">
-                IGCSE Notes
+                Study Notes Platform
               </div>
             </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-6">
-              <Link href="/subjects" className="text-gray-700 hover:text-[#a0b834] transition-colors">
-                Subjects
+              <Link href="/syllabus" className="text-gray-700 hover:text-[#a0b834] transition-colors">
+                Syllabus
               </Link>
               <Link href="/about" className="text-gray-700 hover:text-[#a0b834] transition-colors">
                 About
@@ -110,11 +110,11 @@ export default function Navbar() {
           <div className="md:hidden bg-white border-t">
             <div className="px-2 pt-2 pb-3 space-y-1">
               <Link 
-                href="/subjects" 
+                href="/syllabus" 
                 className="block px-3 py-2 text-gray-700 hover:text-[#a0b834]"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Subjects
+                Syllabus
               </Link>
               <Link 
                 href="/about" 

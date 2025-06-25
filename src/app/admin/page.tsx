@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Upload, FileText, Save, Trash2, Eye } from 'lucide-react';
 import { subjects } from '@/config/subjects';
+import { levels } from '@/config/levels';
 import { Note } from '@/types';
 import { 
   collection, 
@@ -28,6 +29,7 @@ export default function AdminPage() {
 
   // Form state
   const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedLevel, setSelectedLevel] = useState('');
   const [topic, setTopic] = useState('');
   const [file, setFile] = useState<File | null>(null);
 
@@ -63,11 +65,20 @@ export default function AdminPage() {
       
       const fetchedNotes: Note[] = [];
       querySnapshot.forEach((doc) => {
+        const noteData = doc.data();
         fetchedNotes.push({
           id: doc.id,
-          ...doc.data(),
-          createdAt: doc.data().createdAt?.toDate() || new Date(),
-          updatedAt: doc.data().updatedAt?.toDate() || new Date(),
+          subject: noteData.subject,
+          level: noteData.level || 'gcse', // Default to GCSE for backward compatibility
+          topic: noteData.topic,
+          fileName: noteData.fileName,
+          fileType: noteData.fileType,
+          fileSize: noteData.fileSize,
+          fileContent: noteData.fileContent,
+          downloadURL: noteData.downloadURL,
+          downloads: noteData.downloads || 0,
+          createdAt: noteData.createdAt?.toDate() || new Date(),
+          updatedAt: noteData.updatedAt?.toDate() || new Date(),
         } as Note);
       });
       
@@ -82,7 +93,7 @@ export default function AdminPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!file || !selectedSubject || !topic.trim()) {
+    if (!file || !selectedSubject || !selectedLevel || !topic.trim()) {
       alert('Please fill in all fields and select a file.');
       return;
     }
@@ -105,6 +116,7 @@ export default function AdminPage() {
       // Save note data to Firestore with base64 content
       const noteData = {
         subject: selectedSubject,
+        level: selectedLevel,
         topic: topic.trim(),
         fileName: file.name,
         fileType: file.type,
@@ -121,6 +133,7 @@ export default function AdminPage() {
 
       // Reset form
       setSelectedSubject('');
+      setSelectedLevel('');
       setTopic('');
       setFile(null);
       
@@ -251,7 +264,26 @@ export default function AdminPage() {
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Academic Level
+                  </label>
+                  <select
+                    value={selectedLevel}
+                    onChange={(e) => setSelectedLevel(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834] text-gray-900"
+                    required
+                  >
+                    <option value="" className="text-gray-900">Select level</option>
+                    {levels.map((level) => (
+                      <option key={level.id} value={level.id} className="text-gray-900">
+                        {level.icon} {level.displayName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Subject
@@ -351,6 +383,7 @@ export default function AdminPage() {
                 <table className="w-full table-auto">
                   <thead>
                     <tr className="border-b border-gray-200">
+                      <th className="text-left py-3 px-4 font-semibold text-gray-900">Level</th>
                       <th className="text-left py-3 px-4 font-semibold text-gray-900">Subject</th>
                       <th className="text-left py-3 px-4 font-semibold text-gray-900">Topic</th>
                       <th className="text-left py-3 px-4 font-semibold text-gray-900">Created</th>
@@ -361,8 +394,15 @@ export default function AdminPage() {
                   <tbody>
                     {notes.map((note) => {
                       const subject = subjects.find(s => s.id === note.subject);
+                      const level = levels.find(l => l.id === note.level);
                       return (
                         <tr key={note.id} className="border-b border-gray-100 hover:bg-gray-50">
+                          <td className="py-3 px-4">
+                            <div className="flex items-center">
+                              <span className="mr-2">{level?.icon || '🎓'}</span>
+                              <span className="font-medium">{level?.displayName || 'GCSE'}</span>
+                            </div>
+                          </td>
                           <td className="py-3 px-4">
                             <div className="flex items-center">
                               <span className="mr-2">{subject?.icon}</span>

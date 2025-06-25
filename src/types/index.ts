@@ -1,6 +1,7 @@
 export interface Note {
   id: string;
   subject: Subject;
+  level: AcademicLevel;
   topic: string;
   downloadURL?: string; // Optional for backward compatibility
   fileName?: string; // For base64 storage
@@ -20,6 +21,8 @@ export interface User {
   savedNotes?: string[]; // Array of note IDs
 }
 
+export type AcademicLevel = 'gcse' | 'as-level' | 'a-level';
+
 export type Subject = 
   | 'biology'
   | 'chemistry'
@@ -38,4 +41,13 @@ export interface SubjectInfo {
   icon: string;
   color: string;
   description: string;
+}
+
+export interface LevelInfo {
+  id: AcademicLevel;
+  name: string;
+  displayName: string;
+  description: string;
+  icon: string;
+  color: string;
 }

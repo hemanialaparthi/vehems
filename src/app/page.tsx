@@ -1,6 +1,7 @@
 'use client';
 
 import { subjects } from '@/config/subjects';
+import { levels } from '@/config/levels';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { BookOpen, Users, Download, Star } from 'lucide-react';
@@ -21,15 +22,15 @@ export default function HomePage() {
               Welcome to <span className="text-yellow-300">Vehems</span>
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-100 max-w-3xl mx-auto">
-              Your ultimate destination for comprehensive IGCSE notes and study materials. 
+              Your ultimate destination for comprehensive study notes across GCSE, AS-Level, and A-Level. 
               Excel in your exams with our carefully curated educational resources.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/subjects"
+                href="/syllabus"
                 className="bg-white text-[#7d9929] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
               >
-                Explore Subjects
+                Browse Syllabus
               </Link>
               <Link
                 href="#features"
@@ -53,8 +54,8 @@ export default function HomePage() {
               className="bg-white p-6 rounded-lg shadow-md"
             >
               <BookOpen className="w-8 h-8 text-[#7d9929] mx-auto mb-2" />
-              <div className="text-3xl font-bold text-gray-900">10+</div>
-              <div className="text-gray-600">Subjects</div>
+              <div className="text-3xl font-bold text-gray-900">{levels.length}</div>
+              <div className="text-gray-600">Academic Levels</div>
             </motion.div>
             
             <motion.div
@@ -103,10 +104,10 @@ export default function HomePage() {
             className="text-center mb-12"
           >
             <h2 className="text-4xl font-bold text-white mb-4">
-              Explore Our Subjects
+              Explore Our Curriculum
             </h2>
             <p className="text-xl text-white max-w-2xl mx-auto">
-              Choose from our comprehensive collection of IGCSE subjects, 
+              Choose from our comprehensive collection of subjects across GCSE, AS-Level, and A-Level, 
               each carefully organized with high-quality notes and resources.
             </p>
           </motion.div>
@@ -121,7 +122,7 @@ export default function HomePage() {
                 whileHover={{ scale: 1.05 }}
                 className="group"
               >
-                <Link href={`/subjects/${subject.id}`}>
+                <Link href={`/syllabus`}>
                   <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border-2 border-transparent hover:border-[#c5d86c]">
                     <div className={`w-16 h-16 ${subject.color} rounded-full flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform`}>
                       {subject.icon}
@@ -222,7 +223,7 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/subjects"
+                href="/syllabus"
                 className="bg-white text-[#7d9929] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-block"
               >
                 Start Learning Today
