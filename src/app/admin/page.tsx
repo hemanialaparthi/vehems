@@ -259,12 +259,12 @@ export default function AdminPage() {
                   <select
                     value={selectedSubject}
                     onChange={(e) => setSelectedSubject(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834] text-gray-900"
                     required
                   >
-                    <option value="">Select a subject</option>
+                    <option value="" className="text-gray-900">Select a subject</option>
                     {subjects.map((subject) => (
-                      <option key={subject.id} value={subject.id}>
+                      <option key={subject.id} value={subject.id} className="text-gray-900">
                         {subject.icon} {subject.name}
                       </option>
                     ))}
@@ -280,7 +280,7 @@ export default function AdminPage() {
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
                     placeholder="e.g., Photosynthesis, Atomic Structure"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834] text-gray-900 placeholder-gray-600"
                     required
                   />
                 </div>
@@ -294,7 +294,7 @@ export default function AdminPage() {
                   type="file"
                   accept=".pdf"
                   onChange={(e) => setFile(e.target.files?.[0] || null)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834] text-gray-900"
                   required
                 />
                 {file && (
