@@ -19,7 +19,7 @@ export default function HomePage() {
             className="text-center"
           >
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Welcome to <span className="text-yellow-300">Vehems</span>
+              Vehems Study Loft
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-100 max-w-3xl mx-auto">
               Your ultimate destination for comprehensive study notes across GCSE, AS-Level, and A-Level. 
