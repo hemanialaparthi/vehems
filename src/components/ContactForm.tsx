@@ -88,7 +88,7 @@ export default function ContactForm({ isOpen, onClose, subject = '', type = 'gen
           >
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-gray-900 flex items-center">
-                <Mail className="w-6 h-6 mr-2 text-indigo-600" />
+                <Mail className="w-6 h-6 mr-2 text-[#a0b834]" />
                 {type === 'subject-request' ? 'Request Subject' : 'Contact Us'}
               </h2>
               <button
@@ -126,7 +126,8 @@ export default function ContactForm({ isOpen, onClose, subject = '', type = 'gen
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="Enter your full name"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834] text-gray-900 placeholder-gray-500"
                     required
                   />
                 </div>
@@ -140,7 +141,8 @@ export default function ContactForm({ isOpen, onClose, subject = '', type = 'gen
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="Enter your email address"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834] text-gray-900 placeholder-gray-500"
                     required
                   />
                 </div>
@@ -154,7 +156,8 @@ export default function ContactForm({ isOpen, onClose, subject = '', type = 'gen
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="What is this message about?"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834] text-gray-900 placeholder-gray-500"
                     required
                   />
                 </div>
@@ -168,7 +171,8 @@ export default function ContactForm({ isOpen, onClose, subject = '', type = 'gen
                     value={formData.message}
                     onChange={handleChange}
                     rows={5}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-vertical"
+                    placeholder="Write your message here..."
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834] text-gray-900 placeholder-gray-500 resize-vertical"
                     required
                   />
                 </div>
@@ -192,7 +196,7 @@ export default function ContactForm({ isOpen, onClose, subject = '', type = 'gen
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex-1 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                    className="flex-1 bg-[#a0b834] text-white px-4 py-2 rounded-lg hover:bg-[#7d9929] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                   >
                     {isSubmitting ? (
                       <>
@@ -210,8 +214,8 @@ export default function ContactForm({ isOpen, onClose, subject = '', type = 'gen
               </form>
             )}
 
-            <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="text-blue-800 text-sm">
+            <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-green-800 text-sm">
                 💡 <strong>Direct Email:</strong> Your message will be sent directly to our admin team. 
                 No need to open any external email clients!
               </p>
