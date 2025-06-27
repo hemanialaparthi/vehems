@@ -61,6 +61,9 @@ export default function Navbar() {
               <Link href="/syllabus" className="text-gray-700 hover:text-[#a0b834] transition-colors">
                 Syllabus
               </Link>
+              <Link href="/partners" className="text-gray-700 hover:text-[#a0b834] transition-colors">
+                Resources
+              </Link>
               <Link href="/about" className="text-gray-700 hover:text-[#a0b834] transition-colors">
                 About
               </Link>
@@ -115,6 +118,13 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Syllabus
+              </Link>
+              <Link 
+                href="/partners" 
+                className="block px-3 py-2 text-gray-700 hover:text-[#a0b834]"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Resources
               </Link>
               <Link 
                 href="/about" 
