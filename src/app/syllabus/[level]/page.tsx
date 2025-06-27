@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
-import { subjects } from '@/config/subjects';
+import { getSubjectsForLevel } from '@/config/subjects';
 import { levels } from '@/config/levels';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -15,6 +15,7 @@ export default function LevelSubjectsPage() {
   const [showContactForm, setShowContactForm] = useState(false);
 
   const level = levels.find(l => l.id === levelId);
+  const availableSubjects = getSubjectsForLevel(levelId);
 
   if (!level) {
     return (
@@ -64,8 +65,19 @@ export default function LevelSubjectsPage() {
           </div>
         </motion.div>
 
+        {availableSubjects.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-600 text-lg">No subjects available for this level yet.</p>
+            <button
+              onClick={() => setShowContactForm(true)}
+              className="mt-4 bg-[#a0b834] text-white px-6 py-2 rounded-lg hover:bg-[#7d9929] transition-colors"
+            >
+              Request Subjects
+            </button>
+          </div>
+        ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {subjects.map((subject, index) => (
+          {availableSubjects.map((subject, index) => (
             <motion.div
               key={subject.id}
               initial={{ opacity: 0, y: 20 }}
@@ -100,6 +112,7 @@ export default function LevelSubjectsPage() {
             </motion.div>
           ))}
         </div>
+        )}
 
         {/* Call to Action */}
         <motion.div

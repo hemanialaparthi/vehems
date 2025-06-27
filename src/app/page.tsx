@@ -1,6 +1,6 @@
 'use client';
 
-import { subjects } from '@/config/subjects';
+import { subjects, getLevelsForSubject } from '@/config/subjects';
 import { levels } from '@/config/levels';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -130,9 +130,22 @@ export default function HomePage() {
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       {subject.name}
                     </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
+                    <p className="text-gray-600 text-sm leading-relaxed mb-3">
                       {subject.description}
                     </p>
+                    <div className="flex flex-wrap gap-1">
+                      {getLevelsForSubject(subject.id).map(levelId => {
+                        const levelInfo = levels.find(l => l.id === levelId);
+                        return levelInfo ? (
+                          <span 
+                            key={levelId}
+                            className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full"
+                          >
+                            {levelInfo.displayName}
+                          </span>
+                        ) : null;
+                      })}
+                    </div>
                   </div>
                 </Link>
               </motion.div>

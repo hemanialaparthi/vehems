@@ -30,18 +30,11 @@ export const subjects: SubjectInfo[] = [
     description: 'Algebra, geometry, calculus, and mathematical reasoning'
   },
   {
-    id: 'english',
-    name: 'English',
+    id: 'additional-mathematics',
+    name: 'Additional Mathematics',
     icon: '📚',
     color: 'bg-yellow-500',
-    description: 'Literature, language analysis, and creative writing'
-  },
-  {
-    id: 'history',
-    name: 'History',
-    icon: '🏛️',
-    color: 'bg-amber-600',
-    description: 'Historical events, civilizations, and cultural development'
+    description: 'Advanced mathematical concepts including calculus, statistics, and complex problem-solving'
   },
   {
     id: 'geography',
@@ -51,13 +44,6 @@ export const subjects: SubjectInfo[] = [
     description: 'Physical geography, human settlements, and environmental studies'
   },
   {
-    id: 'economics',
-    name: 'Economics',
-    icon: '💰',
-    color: 'bg-indigo-500',
-    description: 'Economic theory, market analysis, and financial systems'
-  },
-  {
     id: 'business-studies',
     name: 'Business Studies',
     icon: '💼',
@@ -65,10 +51,47 @@ export const subjects: SubjectInfo[] = [
     description: 'Business operations, management, and entrepreneurship'
   },
   {
-    id: 'computer-science',
-    name: 'Computer Science',
+    id: 'ict',
+    name: 'ICT',
     icon: '💻',
     color: 'bg-cyan-500',
     description: 'Programming, algorithms, and computational thinking'
   }
 ];
+
+// Define which subjects are available for each level
+export const levelSubjects = {
+  'gcse': [
+    'biology', 'chemistry', 'physics', 'mathematics', 'additional-mathematics',
+    'geography', 'business-studies', 'ict'
+  ],
+  'as-level': [
+    'mathematics', 'biology', 'chemistry', 'physics'
+  ],
+  'a-level': [
+    'mathematics', 'biology', 'chemistry', 'physics'
+  ]
+} as const;
+
+// Helper function to get subjects for a specific level
+export const getSubjectsForLevel = (levelId: string): SubjectInfo[] => {
+  const levelSubjectIds = levelSubjects[levelId as keyof typeof levelSubjects];
+  if (!levelSubjectIds) return [];
+  
+  return subjects.filter(subject => 
+    levelSubjectIds.includes(subject.id as any)
+  );
+};
+
+// Helper function to get available levels for a subject
+export const getLevelsForSubject = (subjectId: string): string[] => {
+  const availableLevels: string[] = [];
+  
+  Object.entries(levelSubjects).forEach(([level, subjects]) => {
+    if (subjects.includes(subjectId as any)) {
+      availableLevels.push(level);
+    }
+  });
+  
+  return availableLevels;
+};

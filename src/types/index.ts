@@ -28,12 +28,11 @@ export type Subject =
   | 'chemistry'
   | 'physics'
   | 'mathematics'
-  | 'english'
-  | 'history'
+  | 'additional-mathematics'
   | 'geography'
-  | 'economics'
   | 'business-studies'
-  | 'computer-science';
+  | 'ict'
+
 
 export interface SubjectInfo {
   id: Subject;
