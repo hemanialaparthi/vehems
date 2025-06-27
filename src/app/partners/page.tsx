@@ -131,7 +131,7 @@ export default function ResourcesPage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="p-6"
             >
-              <div className="text-3xl font-bold text-[#a0b834] mb-2">5</div>
+              <div className="text-3xl font-bold text-[#a0b834] mb-2">{categories.length - 1}</div>
               <div className="text-gray-600">Resource Categories</div>
             </motion.div>
             <motion.div
