@@ -8,6 +8,7 @@ export interface Note {
   fileType?: string; // For base64 storage
   fileSize?: number; // For base64 storage
   fileContent?: string; // Base64 encoded file content
+  driveLink?: string; // Google Drive link for new notes
   createdAt: Date;
   updatedAt: Date;
   downloads?: number;

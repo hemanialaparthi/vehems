@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Upload, FileText, Save, Trash2, Eye } from 'lucide-react';
+import { Link as LinkIcon, FileText, Save, Trash2, Eye } from 'lucide-react';
 import { subjects } from '@/config/subjects';
 import { levels } from '@/config/levels';
 import { Note } from '@/types';
@@ -31,7 +31,7 @@ export default function AdminPage() {
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedLevel, setSelectedLevel] = useState('');
   const [topic, setTopic] = useState('');
-  const [file, setFile] = useState<File | null>(null);
+  const [driveLink, setDriveLink] = useState('');
 
   useEffect(() => {
     if (!loading && (!user || !isAdmin(user.email))) {
@@ -76,6 +76,7 @@ export default function AdminPage() {
           fileSize: noteData.fileSize,
           fileContent: noteData.fileContent,
           downloadURL: noteData.downloadURL,
+          driveLink: noteData.driveLink, // Add driveLink field
           downloads: noteData.downloads || 0,
           createdAt: noteData.createdAt?.toDate() || new Date(),
           updatedAt: noteData.updatedAt?.toDate() || new Date(),
@@ -93,35 +94,27 @@ export default function AdminPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!file || !selectedSubject || !selectedLevel || !topic.trim()) {
-      alert('Please fill in all fields and select a file.');
+    if (!driveLink.trim() || !selectedSubject || !selectedLevel || !topic.trim()) {
+      alert('Please fill in all fields including the Google Drive link.');
       return;
     }
 
-    // Check file size (Firestore has a 1MB document limit)
-    if (file.size > 1024 * 1024) { // 1MB limit
-      alert('File size must be less than 1MB due to Firestore limitations. Please use a smaller PDF file.');
+    // Validate if it's a proper Google Drive link
+    if (!isValidDriveLink(driveLink)) {
+      alert('Please enter a valid Google Drive link. Make sure the link is publicly accessible.');
       return;
     }
 
-    console.log('Starting upload process...');
+    console.log('Starting note creation...');
     setUploading(true);
 
     try {
-      // Convert file to base64
-      console.log('Converting file to base64...');
-      const base64String = await convertFileToBase64(file);
-      console.log('File converted to base64 successfully');
-
-      // Save note data to Firestore with base64 content
+      // Save note data to Firestore with drive link
       const noteData = {
         subject: selectedSubject,
         level: selectedLevel,
         topic: topic.trim(),
-        fileName: file.name,
-        fileType: file.type,
-        fileSize: file.size,
-        fileContent: base64String, // Store file as base64
+        driveLink: driveLink.trim(),
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
         downloads: 0,
@@ -135,25 +128,41 @@ export default function AdminPage() {
       setSelectedSubject('');
       setSelectedLevel('');
       setTopic('');
-      setFile(null);
+      setDriveLink('');
       
       // Refresh notes list
       fetchNotes();
       
-      alert('Note uploaded successfully!');
+      alert('Note added successfully!');
     } catch (error) {
-      console.error('Error uploading note:', error);
+      console.error('Error adding note:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      alert(`Error uploading note: ${errorMessage}`);
+      alert(`Error adding note: ${errorMessage}`);
     } finally {
       setUploading(false);
     }
   };
 
+  // Helper function to validate Google Drive links
+  const isValidDriveLink = (url: string): boolean => {
+    try {
+      const urlObj = new URL(url);
+      return urlObj.hostname === 'drive.google.com' || 
+             urlObj.hostname === 'docs.google.com' ||
+             url.includes('drive.google.com') ||
+             url.includes('docs.google.com');
+    } catch {
+      return false;
+    }
+  };
+
   // Helper function to handle file preview
   const handlePreview = (note: Note) => {
-    if (note.fileContent) {
-      // Base64 stored file - create blob URL and open
+    if (note.driveLink) {
+      // New Google Drive link - open directly
+      window.open(note.driveLink, '_blank');
+    } else if (note.fileContent) {
+      // Legacy base64 stored file - create blob URL and open
       const byteCharacters = atob(note.fileContent.split(',')[1]);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
@@ -171,29 +180,13 @@ export default function AdminPage() {
     }
   };
 
-  // Helper function to convert file to base64
-  const convertFileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.result) {
-          resolve(reader.result as string);
-        } else {
-          reject(new Error('Failed to read file'));
-        }
-      };
-      reader.onerror = () => reject(reader.error);
-      reader.readAsDataURL(file);
-    });
-  };
-
   const handleDelete = async (note: Note) => {
     if (!confirm(`Are you sure you want to delete "${note.topic}"?`)) {
       return;
     }
 
     try {
-      // Delete from Firestore (files are stored as base64 in the document)
+      // Delete from Firestore
       await deleteDoc(doc(db, 'notes', note.id));
       
       // Refresh notes list
@@ -259,8 +252,8 @@ export default function AdminPage() {
           {/* Upload Form */}
           <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-              <Upload className="w-6 h-6 mr-2" />
-              Upload New Note
+              <LinkIcon className="w-6 h-6 mr-2" />
+              Add New Note
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -320,30 +313,31 @@ export default function AdminPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  PDF File (Max 1MB)
+                  Google Drive Link
                 </label>
                 <input
-                  type="file"
-                  accept=".pdf"
-                  onChange={(e) => setFile(e.target.files?.[0] || null)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834] text-gray-900"
+                  type="url"
+                  value={driveLink}
+                  onChange={(e) => setDriveLink(e.target.value)}
+                  placeholder="https://drive.google.com/file/d/..."
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a0b834] text-gray-900 placeholder-gray-600"
                   required
                 />
-                {file && (
-                  <div className="mt-1">
-                    <p className="text-sm text-gray-600">
-                      Selected: {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
-                    </p>
-                    {file.size > 1024 * 1024 && (
-                      <p className="text-sm text-red-600">
-                        ⚠️ File is too large! Maximum size is 1MB due to Firestore limitations.
-                      </p>
-                    )}
-                  </div>
+                {driveLink && !isValidDriveLink(driveLink) && (
+                  <p className="text-sm text-red-600 mt-1">
+                    ⚠️ Please enter a valid Google Drive link
+                  </p>
                 )}
-                <p className="text-xs text-gray-500 mt-1">
-                  Note: Using Firebase free plan (Spark) - files are stored as Base64 in Firestore with 1MB limit per document.
-                </p>
+                <div className="mt-2 text-sm text-gray-500">
+                  <p className="font-medium mb-1">📋 How to get a shareable Google Drive link:</p>
+                  <ol className="list-decimal list-inside space-y-1 text-xs">
+                    <li>Upload your PDF to Google Drive</li>
+                    <li>Right-click the file and select "Share"</li>
+                    <li>Change access to "Anyone with the link"</li>
+                    <li>Set permission to "Viewer"</li>
+                    <li>Copy and paste the link here</li>
+                  </ol>
+                </div>
               </div>
 
               <button
@@ -354,12 +348,12 @@ export default function AdminPage() {
                 {uploading ? (
                   <>
                     <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                    Uploading...
+                    Adding Note...
                   </>
                 ) : (
                   <>
                     <Save className="w-5 h-5 mr-2" />
-                    Upload Note
+                    Add Note
                   </>
                 )}
               </button>
@@ -386,6 +380,7 @@ export default function AdminPage() {
                       <th className="text-left py-3 px-4 font-semibold text-gray-900">Level</th>
                       <th className="text-left py-3 px-4 font-semibold text-gray-900">Subject</th>
                       <th className="text-left py-3 px-4 font-semibold text-gray-900">Topic</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-900">Type</th>
                       <th className="text-left py-3 px-4 font-semibold text-gray-900">Created</th>
                       <th className="text-left py-3 px-4 font-semibold text-gray-900">Downloads</th>
                       <th className="text-left py-3 px-4 font-semibold text-gray-900">Actions</th>
@@ -410,6 +405,17 @@ export default function AdminPage() {
                             </div>
                           </td>
                           <td className="py-3 px-4 font-medium text-gray-900">{note.topic}</td>
+                          <td className="py-3 px-4">
+                            {note.driveLink ? (
+                              <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
+                                🔗 Drive Link
+                              </span>
+                            ) : (
+                              <span className="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-xs font-medium">
+                                📄 Legacy File
+                              </span>
+                            )}
+                          </td>
                           <td className="py-3 px-4 text-gray-700">
                             {note.createdAt.toLocaleDateString()}
                           </td>

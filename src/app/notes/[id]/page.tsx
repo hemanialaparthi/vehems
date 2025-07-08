@@ -9,19 +9,34 @@ import Link from 'next/link';
 import { doc, getDoc, updateDoc, increment } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { subjects } from '@/config/subjects';
+import { useAuth } from '@/contexts/AuthContext';
+import { showLoginModal } from '@/lib/auth-utils';
 
 export default function NotePage() {
   const params = useParams();
   const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
   const noteId = params.id as string;
   const [note, setNote] = useState<Note | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   useEffect(() => {
-    if (noteId) {
-      fetchNote();
+    if (!authLoading) {
+      if (!user) {
+        // User is not logged in, show login prompt
+        setShowLoginPrompt(true);
+        setLoading(false);
+      } else {
+        // User is logged in, hide login prompt and fetch the note
+        setShowLoginPrompt(false);
+        if (noteId) {
+          setLoading(true); // Set loading when starting to fetch
+          fetchNote();
+        }
+      }
     }
-  }, [noteId]);
+  }, [noteId, user, authLoading]);
 
   const fetchNote = async () => {
     try {
@@ -39,9 +54,14 @@ export default function NotePage() {
       } else {
         router.push('/subjects');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching note:', error);
-      router.push('/subjects');
+      // If there's a permission error, show login prompt
+      if (error?.code === 'permission-denied') {
+        setShowLoginPrompt(true);
+      } else {
+        router.push('/subjects');
+      }
     } finally {
       setLoading(false);
     }
@@ -61,8 +81,11 @@ export default function NotePage() {
       setNote(prev => prev ? { ...prev, downloads: (prev.downloads || 0) + 1 } : null);
       
       // Handle download based on storage type
-      if (note.fileContent) {
-        // Base64 stored file - create blob and download
+      if (note.driveLink) {
+        // New Google Drive link - open in new tab
+        window.open(note.driveLink, '_blank');
+      } else if (note.fileContent) {
+        // Legacy base64 stored file - create blob and download
         const byteCharacters = atob(note.fileContent.split(',')[1]);
         const byteNumbers = new Array(byteCharacters.length);
         for (let i = 0; i < byteCharacters.length; i++) {
@@ -85,8 +108,8 @@ export default function NotePage() {
         window.open(note.downloadURL, '_blank');
       }
     } catch (error) {
-      console.error('Error downloading file:', error);
-      alert('Error downloading file. Please try again.');
+      console.error('Error accessing file:', error);
+      alert('Error accessing file. Please try again.');
     }
   };
 
@@ -99,6 +122,52 @@ export default function NotePage() {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#a0b834] mx-auto mb-4"></div>
           <p className="text-gray-600">Loading note...</p>
         </div>
+      </div>
+    );
+  }
+
+  if (showLoginPrompt) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-md mx-auto px-4"
+        >
+          <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+            <div className="w-16 h-16 bg-[#e9f2b3] rounded-full flex items-center justify-center mx-auto mb-6">
+              <span className="text-2xl">🔒</span>
+            </div>
+            
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+              Login Required
+            </h1>
+            
+            <p className="text-gray-600 mb-6">
+              You need to be logged in to access study notes. Please sign in or create an account to continue.
+            </p>
+            
+            <div className="flex justify-center">
+              <button
+                onClick={showLoginModal}
+                className="bg-[#a0b834] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#7d9929] transition-colors"
+              >
+                Sign In / Sign Up
+              </button>
+            </div>
+            
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <Link
+                href="/"
+                className="text-[#a0b834] hover:text-[#7d9929] flex items-center justify-center"
+              >
+                <ArrowLeft className="w-4 h-4 mr-1" />
+                Back to Home
+              </Link>
+            </div>
+          </div>
+        </motion.div>
       </div>
     );
   }
@@ -180,28 +249,50 @@ export default function NotePage() {
                 <Download className="w-4 h-4 mr-1" />
                 <span>{note.downloads || 0} downloads</span>
               </div>
+              {note.driveLink && (
+                <div className="flex items-center">
+                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
+                    🔗 Google Drive
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Download Section */}
             <div className="border-t pt-6">
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  onClick={handleDownload}
-                  className="flex-1 bg-[#a0b834] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#7d9929] transition-colors flex items-center justify-center"
-                >
-                  <Download className="w-5 h-5 mr-2" />
-                  Download PDF
-                </button>
-                <button
-                  onClick={handleDownload}
-                  className="flex-1 bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors flex items-center justify-center"
-                >
-                  <ExternalLink className="w-5 h-5 mr-2" />
-                  Preview
-                </button>
-              </div>
+              {note.driveLink ? (
+                <div className="flex justify-center">
+                  <button
+                    onClick={handleDownload}
+                    className="bg-[#a0b834] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#7d9929] transition-colors flex items-center justify-center"
+                  >
+                    <ExternalLink className="w-5 h-5 mr-2" />
+                    Open in Google Drive
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button
+                    onClick={handleDownload}
+                    className="flex-1 bg-[#a0b834] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#7d9929] transition-colors flex items-center justify-center"
+                  >
+                    <ExternalLink className="w-5 h-5 mr-2" />
+                    Download PDF
+                  </button>
+                  <button
+                    onClick={handleDownload}
+                    className="flex-1 bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors flex items-center justify-center"
+                  >
+                    <ExternalLink className="w-5 h-5 mr-2" />
+                    Preview
+                  </button>
+                </div>
+              )}
               <p className="text-sm text-gray-500 mt-3 text-center">
-                Click to download or preview the PDF in a new tab
+                {note.driveLink 
+                  ? 'Click to open the file in Google Drive where you can view, download, or print it'
+                  : 'Click to download or preview the PDF in a new tab'
+                }
               </p>
             </div>
           </div>
