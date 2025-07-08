@@ -105,7 +105,7 @@ A modern, full-stack web application for sharing IGCSE study notes and materials
      }
    }
    ```
-   
+
    *Note: Firebase Storage is now only used for legacy file support. New notes use Google Drive links.*
 
 7. **Start the development server**
