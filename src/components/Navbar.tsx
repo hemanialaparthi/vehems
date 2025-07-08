@@ -3,7 +3,7 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LogOut, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 
@@ -14,6 +14,19 @@ export default function Navbar() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Listen for custom login events
+  useEffect(() => {
+    const handleShowLogin = () => {
+      setShowAuthModal(true);
+    };
+
+    window.addEventListener('showLoginModal', handleShowLogin);
+    
+    return () => {
+      window.removeEventListener('showLoginModal', handleShowLogin);
+    };
+  }, []);
 
   const handleGoogleSignIn = async () => {
     try {

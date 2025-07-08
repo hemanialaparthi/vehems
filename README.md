@@ -8,15 +8,15 @@ A modern, full-stack web application for sharing IGCSE study notes and materials
 
 - **Subject Browse**: Visual subject grid with icons and descriptions
 - **Search & Filter**: Easy navigation through notes by subject and topic
-- **PDF Downloads**: Direct download links for all study materials
+- **Easy Access**: Direct links to Google Drive for reliable file access
 - **User Authentication**: Secure login with Google or email
 - **Profile Management**: Track downloads and study progress
 - **Responsive Design**: Works perfectly on desktop and mobile
 
 ### For Admins
 
-- **Content Management**: Simple admin panel for uploading notes
-- **File Upload**: Direct PDF upload to Firebase Storage
+- **Content Management**: Simple admin panel for adding notes via Google Drive links
+- **Link Management**: Easy integration with Google Drive for unlimited file sizes
 - **Note Organization**: Categorize by subject and topic
 - **Analytics**: Track download counts and popular content
 - **User Management**: Monitor user activity and engagement
@@ -92,19 +92,21 @@ A modern, full-stack web application for sharing IGCSE study notes and materials
    }
    ```
 
-6. **Set up Firebase Storage Rules**
+6. **Set up Firebase Storage Rules (Optional)**
 
    ```javascript
    rules_version = '2';
    service firebase.storage {
      match /b/{bucket}/o {
        match /notes/{allPaths=**} {
-         allow read: if true; // Public read access for downloads
-         allow write: if request.auth != null; // Only authenticated users can upload
+         allow read: if true; // Public read access for legacy files
+         allow write: if request.auth != null; // Only authenticated users can upload legacy files
        }
      }
    }
    ```
+   
+   *Note: Firebase Storage is now only used for legacy file support. New notes use Google Drive links.*
 
 7. **Start the development server**
 
@@ -118,8 +120,10 @@ A modern, full-stack web application for sharing IGCSE study notes and materials
 
 1. **Set up Firebase** - Replace placeholder values in `.env.local`
 2. **Configure Admin Access** - Add your sister's email to admin settings
-3. **Upload First Notes** - Use the admin panel at `/admin`
+3. **Add First Notes** - Use the admin panel at `/admin` to add Google Drive links
 4. **Deploy to Vercel** - Connect repository and deploy
-5. **Test Everything** - Verify uploads, downloads, and user flows
+5. **Test Everything** - Verify links, access, and user flows
+
+**Note**: The application now uses Google Drive links instead of direct file uploads, eliminating the 1MB file size limitation and providing more reliable file hosting.
 
 ---
