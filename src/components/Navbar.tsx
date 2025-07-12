@@ -75,7 +75,7 @@ export default function Navbar() {
                 Syllabus
               </Link>
               <Link href="/partners" className="text-gray-700 hover:text-[#a0b834] transition-colors">
-                Resources
+                Partners
               </Link>
               <Link href="/about" className="text-gray-700 hover:text-[#a0b834] transition-colors">
                 About
@@ -137,7 +137,7 @@ export default function Navbar() {
                 className="block px-3 py-2 text-gray-700 hover:text-[#a0b834]"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Resources
+                Partners
               </Link>
               <Link 
                 href="/about" 

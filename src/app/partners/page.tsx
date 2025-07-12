@@ -1,96 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, BookOpen, Globe, Users, Award, Star } from 'lucide-react';
+import { ExternalLink, BookOpen, Globe } from 'lucide-react';
 import Link from 'next/link';
 
-const resources = [
-  {
-    id: 1,
-    name: "Cambridge Assessment International Education",
-    description: "Official IGCSE curriculum provider and examination board",
-    url: "https://www.cambridgeinternational.org/",
-    category: "Official",
-    logo: "🎓",
-    features: ["Past Papers", "Syllabus Updates", "Assessment Guidelines"]
-  },
-  {
-    id: 2,
-    name: "Khan Academy",
-    description: "Free online courses and practice exercises for various subjects",
-    url: "https://www.khanacademy.org/",
-    category: "Educational",
-    logo: "📚",
-    features: ["Video Lessons", "Interactive Exercises", "Progress Tracking"]
-  },
-  {
-    id: 3,
-    name: "Coursera",
-    description: "Online courses from top universities and institutions",
-    url: "https://www.coursera.org/",
-    category: "Online Learning",
-    logo: "🎯",
-    features: ["University Courses", "Certificates", "Specializations"]
-  },
-  {
-    id: 4,
-    name: "edX",
-    description: "High-quality courses from the world's best universities",
-    url: "https://www.edx.org/",
-    category: "Online Learning",
-    logo: "🏛️",
-    features: ["MIT & Harvard Courses", "Verified Certificates", "MicroMasters"]
-  },
-  {
-    id: 5,
-    name: "Quizlet",
-    description: "Study tools including flashcards and practice tests",
-    url: "https://quizlet.com/",
-    category: "Study Tools",
-    logo: "🃏",
-    features: ["Flashcards", "Study Games", "Practice Tests"]
-  },
-  {
-    id: 6,
-    name: "Wolfram Alpha",
-    description: "Computational knowledge engine for mathematics and sciences",
-    url: "https://www.wolframalpha.com/",
-    category: "Study Tools",
-    logo: "🔬",
-    features: ["Step-by-step Solutions", "Mathematical Computations", "Data Analysis"]
-  },
-  {
-    id: 7,
-    name: "TED-Ed",
-    description: "Educational videos and lessons on various topics",
-    url: "https://ed.ted.com/",
-    category: "Educational",
-    logo: "🎬",
-    features: ["Animated Lessons", "Think Questions", "Dig Deeper Resources"]
-  }
-];
-
-const partners = [
-  {
-    id: 1,
-    name: "Your Partner Name",
-    description: "Description of your educational partner and collaboration",
-    url: "https://partner-website.com/",
-    logo: "🤝",
-    features: ["Collaborative Programs", "Joint Resources", "Special Offers"]
-  }
-];
-
-const categories = ["All", "Official", "Educational", "Study Resources", "Online Learning", "Study Tools"];
-
-export default function ResourcesPage() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-
-  const filteredResources = selectedCategory === "All" 
-    ? resources 
-    : resources.filter(resource => resource.category === selectedCategory);
-
+export default function PartnersPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -101,205 +15,89 @@ export default function ResourcesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <BookOpen className="w-16 h-16 mx-auto mb-6 text-[#e9f2b3]" />
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Educational Resources
+              Meet Our Partners
             </h1>
             <p className="text-xl text-[#e9f2b3] max-w-2xl mx-auto">
-              Explore trusted educational resources and tools to enhance your learning journey
+              Discover our trusted educational partners that help enhance your learning experience
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-12 bg-white">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="p-6"
-            >
-              <div className="text-3xl font-bold text-[#a0b834] mb-2">{resources.length}+</div>
-              <div className="text-gray-600">Educational Resources</div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="p-6"
-            >
-              <div className="text-3xl font-bold text-[#a0b834] mb-2">{categories.length - 1}</div>
-              <div className="text-gray-600">Resource Categories</div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="p-6"
-            >
-              <div className="text-3xl font-bold text-[#a0b834] mb-2">100%</div>
-              <div className="text-gray-600">Free Access</div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Category Filter */}
-      <section className="py-8 bg-gray-100">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-2">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  selectedCategory === category
-                    ? 'bg-[#a0b834] text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Resources Grid */}
+      {/* Main Partner Section */}
       <section className="py-16">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">Educational Resources</h2>
-          
-          {filteredResources.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredResources.map((resource, index) => (
-                <motion.div
-                  key={resource.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
-                >
-                  <div className="p-6">
-                    <div className="flex items-center mb-4">
-                      <div className="text-4xl mr-4">{resource.logo}</div>
-                      <div>
-                        <h3 className="text-xl font-semibold text-gray-900 mb-1">
-                          {resource.name}
-                        </h3>
-                        <span className="inline-block px-2 py-1 text-xs font-medium bg-[#e9f2b3] text-[#5a7a1e] rounded-full">
-                          {resource.category}
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                      {resource.description}
-                    </p>
-                    
-                    <div className="mb-4">
-                      <h4 className="text-sm font-medium text-gray-900 mb-2">Key Features:</h4>
-                      <ul className="text-xs text-gray-600 space-y-1">
-                        {resource.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-center">
-                            <Star className="w-3 h-3 text-[#a0b834] mr-2 flex-shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <a
-                      href={resource.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center w-full px-4 py-2 bg-[#a0b834] text-white rounded-lg hover:bg-[#7d9929] transition-colors text-sm font-medium"
-                    >
-                      Visit Website
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </a>
-                  </div>
-                </motion.div>
-              ))}
+        <div className="max-w-4xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="bg-white rounded-xl shadow-lg overflow-hidden"
+          >
+            {/* Partner Header with Solid Background */}
+            <div className="h-64 bg-[#a0b834] relative">
+              {/* Main title */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <h2 className="text-4xl md:text-5xl font-bold text-white tracking-wider mb-2">
+                    Vike Resources
+                  </h2>
+                </div>
+              </div>
             </div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-center py-16"
-            >
-              <div className="text-6xl mb-6">🔍</div>
-              <h3 className="text-2xl font-semibold text-gray-700 mb-4">
-                Oh no, nothing here yet!
-              </h3>
-              <p className="text-gray-500 max-w-md mx-auto mb-6">
-                We're constantly adding new resources to this category. Please check back soon for exciting new educational tools and materials!
-              </p>
-              <button
-                onClick={() => setSelectedCategory("All")}
-                className="inline-flex items-center px-6 py-3 bg-[#a0b834] text-white rounded-lg hover:bg-[#7d9929] transition-colors font-medium"
+
+            {/* Partner Content */}
+            <div className="p-8 md:p-12">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
               >
-                View All Resources
-              </button>
-            </motion.div>
-          )}
+                <p className="text-lg text-gray-700 leading-relaxed mb-8">
+                  Vike Resources is your ultimate online study hub for Cambridge IGCSE, AS, and A2 Levels. 
+                  Run by a passionate and driven team of teens, it offers a wide variety of high-quality, 
+                  often self-made revision notes, study guides, and academic tools designed to support 
+                  students at every stage of their learning journey. With a strong focus on clarity, 
+                  accessibility, and community, Vike makes studying more effective, less stressful, 
+                  and even fun, helping learners worldwide revise smarter, understand better, 
+                  and feel confident every step of the way.
+                </p>
+
+                <div className="flex justify-center">
+                  <motion.a
+                    href="https://vikeresources.framer.website"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center px-8 py-4 bg-[#a0b834] text-white rounded-lg hover:bg-[#7d9929] transition-colors font-semibold text-lg shadow-lg hover:shadow-xl"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    VISIT WEBSITE
+                    <ExternalLink className="w-5 h-5 ml-3" />
+                  </motion.a>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Partners Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">Our Partners</h2>
-          <div className="flex justify-center">
-            <div className="max-w-md">
-              {partners.map((partner, index) => (
-                <motion.div
-                  key={partner.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
-                >
-                  <div className="p-8 text-center">
-                    <div className="text-6xl mb-4">{partner.logo}</div>
-                    <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-                      {partner.name}
-                    </h3>
-                    
-                    <p className="text-gray-600 mb-6 leading-relaxed">
-                      {partner.description}
-                    </p>
-                    
-                    <div className="mb-6">
-                      <h4 className="text-sm font-medium text-gray-900 mb-3">Partnership Benefits:</h4>
-                      <ul className="text-sm text-gray-600 space-y-2">
-                        {partner.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-center justify-center">
-                            <Star className="w-4 h-4 text-[#a0b834] mr-2 flex-shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <a
-                      href={partner.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center px-6 py-3 bg-[#a0b834] text-white rounded-lg hover:bg-[#7d9929] transition-colors font-medium"
-                    >
-                      Visit Partner
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </a>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+      {/* Future Partners Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              More Partners Coming Soon
+            </h3>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              We're actively seeking partnerships with educational institutions and platforms 
+              that share our mission of making quality education accessible to all students.
+            </p>
+          </motion.div>
         </div>
       </section>
 
@@ -309,7 +107,7 @@ export default function ResourcesPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
             className="text-white"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
